@@ -1,0 +1,86 @@
+//Project Team: Josh Thompson and Sri Tanneeru 
+
+An example run with more details and pictures will be provided soon, but would happen something like this.
+	1. upload fsaccess.c to linux operating system (only tested on CentOS)
+	2. Compile fsaccess.c
+	3. In command line "touch file.data"
+	4. In command line ./fsa
+	5. .. "mount file.data"
+	6. .. "initfs 100 1"
+	7. .. "printilist"
+	8. From here you can quit program and create an example text file and copy in
+	9. .. "cpin examplefile exfilein:
+	10. And so on. The program does prompt with a menu and below is information functionality of the program. 
+
+
+Project Description: 
+This is an extention of the C program called fsaccess.c which will allow a Unix user access to the file system of a foreign operating system, 
+the modified Unix Version 6. This program will read a series of commands from the user and execute them. 
+Which support the following commands: 
+
+(a) Mount filenm 
+Here, Filenm is the name of the file that repesents the file system. For example, 
+the command typed maybe Mount /user/name/v6fs. 
+In this example, the file /user/name/v6fs has the v6 filesystem already. 
+
+(b) Ckfiletype n 
+Read the contents of i-node number n and output what type of file this i-node represents. 
+
+(c) Filesize m 
+Read the contents of i-node number m and show, on the screen, what the size of the file whose i-node number is m 
+
+(d) initfs n1 n2
+number n1 indicating the total number of blocks in the disk (fsize)
+number n2 representing the total number of blocks that store i-nodes in the disk (isize) 
+
+(e) cpin f1 f2 
+This command f1 is a file that is in the unix machine that you run the fsaccess prgoram. 
+f2 is the filename where you copy the contents from the first file.  
+
+(f) cpout f3 f4 
+f3 is an existing v6 file i the v6 file system. The name of f3 will always start with / and is an absolute path name. 
+File name f4 denotes the file in the unix machine where you run the program. This command copies the contents of f3 to the newly created f4. 
+
+(g) mkdir newdirectory 
+Creates a new directory user in the root direcotry of the v6 file system. 
+
+(h) rm f5 
+Removes the file f5 from the v6 file system and frees all the data blocks and free the i-ndoe. 
+
+(j) printilist
+Prints a list of the inodes, the type of file the inode references, and if it is allocated (if it doesn't say "is allocated" it is not allocated.
+
+(j) q 
+Save all changes and quit the program. 
+
+
+List of files: 
+1. READ ME.txt
+2. fsaccess.c
+3. file.data (can be created with touch command)
+4. Any text file to copy in. There is a limit of the size of the file. I've primarily tested using smaller, strictly .txt files.
+
+
+Stepts to execute: 
+1. complie file fsaccess.c
+	example: gcc fsaccess.c -o fsaccess
+2. execute 
+	example: ./fsaccess
+
+------------------------------------------------------------------------------------------------------------------------------------
+NOTES:
+
+There are some noteable limitations of the program. It has been over a year since I originally worked on this, so the details are a bit fuzzy, but I'll try to write them out here.
+	- Really only text files with a max size of 16 MB can be copied in and out. (max size is untested)
+	-There is a limit of the number of entries per directory.
+	-Functionality is limited. (i.e. not all functionality we see in file systems are included)
+	-Untested what happens if the end of inode list is reached, or if file system is full. 
+		-method to refill ilist with unallocated inodes is not implemented. However, it is marked in the program where this will 			happen.
+	-File / directory names can only be 14 characters long. I believe this was a requirement to file system structure.
+	-If initfs is called after the inital initfs, then data is not erased. 
+	-Code could be cleaned up and more eloquently implemented. 
+	-Somethings were implemented more than once (DRY violation)
+		-Consider creating a function to handle and call when needed.
+	-Removing file does not reduce size of directory containing file (tested only in root directory)
+		-possible solution is fill with '\0' instead of '0'. (haven't confirmed i'm filling with 0 or \0 will work.
+	-I'm sure there is more; I will add as it comes up.

@@ -1,0 +1,2 @@
+I believe the some of the shellexample code and simpleinputoutput code was partially provided to me and then I had to work on it further.
+The mt.c and shellwithparsing were provided in my operating system concepts course and demonstrate some fundamental concepts.
